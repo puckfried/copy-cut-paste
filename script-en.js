@@ -122,11 +122,11 @@ function showWrongBox(){
 
 // Highscore functions
 function getHighscore(){
-   return localStorage.getItem('highscore')
+   return localStorage.getItem('highscore-cut-copy')
 }
 
 function setHighscore(newScore){
-    localStorage.setItem('highscore', newScore)
+    localStorage.setItem('highscore-cut-copy', newScore)
 }
 
 function compareHighscore(newScore){
