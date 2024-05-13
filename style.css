@@ -8,20 +8,20 @@ nav{
     top: 0;
     font-size: 2rem;
     padding-top: 20px;
-    img{
+}
+ nav   img{
         height: 22px;
     }
-    a{
+   nav a{
         color: black;
         text-decoration: none;
         font-weight: bold;
         padding: 20px;
 
     }
-    a:hover{
+   nav a:hover{
         color: blueviolet;
     }
-}
 h1 {
     padding-left: 50px;
     text-decoration: underline;
@@ -94,6 +94,17 @@ form {
     align-items: center;
 }
 
+label {
+    font-weight: 800;
+    border: 1px solid rebeccapurple;
+    padding: 20px;
+    display: inline-block;
+}
+
+label:hover {
+    background-color: rebeccapurple;
+    color: lightgrey;
+}
 
 .inputBlock {
     width: 100%;
