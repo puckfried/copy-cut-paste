@@ -61,7 +61,7 @@
                <span class="tip">| CTRL+C - Copy | CTRL+V - Paste | CTRL+X - Cut | SHIFT+Arrow keys - Select |</span>
                <label for="text">Click here to place cursor in text field. Navigation only with keyboard.</label>
                
-               <textarea name="text" id="text">
+               <textarea name="text" id="text" onfocus="hintModeOff(event)" onblur="hintModeOn(event)">
                 </textarea>
 
             </section>
@@ -76,7 +76,7 @@
             <h3 class="hide">New Highscore :-) </h3>
             <button onclick="startAgain()" class="startstopBtn">Restart?</button>
         </div>
-        <script src="./script-en.js"></script>
+        <script src="./script.js"></script>
     </main>
     </body>
 </html>

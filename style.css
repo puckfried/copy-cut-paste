@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 body {
     /* font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;  */
     font-family: "Roboto", sans-serif;
@@ -23,13 +26,13 @@ nav{
         color: blueviolet;
     }
 h1 {
-    padding-left: 50px;
+    padding-left: 80px;
     text-decoration: underline;
     margin-bottom: 40px;
     text-align: center;
 }
 
-@media (max-width: 900px) {
+@media (min-width: 900px) {
     /* For mobile phones: */
     h1 {
       text-align: center;
@@ -99,25 +102,31 @@ label {
     padding: 20px;
     display: inline-block;
     background-color: white;
+    border-radius: 100px;
     color: black;
+    transition: all 0.2s
 }
 
 label:hover {
     background-color: rebeccapurple;
     color: lightgrey;
     cursor: pointer;
-    transition: all 0.1s;
+    ;
 }
 
+/* 
+    Styling für den Hinweis Modus - aus spezifität Gründen wurde ID zum stylen bentutz.
+    ID wird dem body gegeben, sobald die TextArea nicht mehr im Fokus liegt.
+
+*/
 #hint-mode:not(label), #hint-mode textarea{
     background-color: #1d1b1b;
-    color: #dedede;
+    color: #dedede29;
     cursor: not-allowed;
 }
 
 #hint-mode label {
     position: relative;
-    border-radius: 100px;
     animation: focusHint 3s infinite linear ;
     z-index: 99;
 }
@@ -144,11 +153,9 @@ label:hover {
     /* box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px; */
     margin-top: 30px;
     font-size: 1rem;
-}
-
-.inputBlock textarea{
     cursor: not-allowed;
 }
+
 
 .inputBlock .tip {
     color: rgb(102, 100, 100);
@@ -157,13 +164,26 @@ label:hover {
 }
 
 .wrongBox {
+    position: fixed;
+    top: 50px;
     border: 5px solid darkred;
     padding: 20px;
     text-align: center;
+    color: white;
+    background-color: black;
+    box-shadow: 0 0 50px darkred;
+    border-radius: 15px;
+    transform: translateY(0) scale(1.5);
+    transition: all .5s;
 }
 
-.hide {
+.hide{
     display: none;
+}
+
+.wrongBox.hide {
+    display: block;
+    transform: translateY(-500px) scale(0);
 }
 
 .finished {
@@ -183,25 +203,28 @@ label:hover {
     0% {
         transform: scale(1.2);
         box-shadow: 
-            20px 10px 20px white, 
-            -20px -10px 20px white,
-            20px -10px 20px white, 
-            -20px 10px 20px white;
+            20px 10px 20px rebeccapurple, 
+            -20px -10px 20px rebeccapurple,
+            20px -10px 20px rebeccapurple, 
+            -20px 10px 20px rebeccapurple,
+            0 0 50px rgb(238, 37, 148);
     }
     
     50% {
         transform: scale(1);
-        box-shadow: 0 0 0 white,
-                    0 0 0 white,
-                    0 0 0 white,
-                    0 0 0 white;
+        box-shadow: 0 0 0 rebeccapurple,
+                    0 0 0 rebeccapurple,
+                    0 0 0 rebeccapurple,
+                    0 0 0 rebeccapurple,
+                    0 0px 0 rgb(238, 37, 148);
     }
     100% {
         transform: scale(1.2);
         box-shadow:  
-            20px 10px 20px white, 
-            -20px -10px 20px white,
-            20px -10px 20px white, 
-            -20px 10px 20px white;
+            20px 10px 20px rebeccapurple, 
+            -20px -10px 20px rebeccapurple,
+            20px -10px 20px rebeccapurple, 
+            -20px 10px 20px rebeccapurple,
+            0 0 50px rgb(238, 37, 148);
     }
 }

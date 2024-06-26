@@ -1,3 +1,4 @@
+const body = document.querySelector("body")
 const divStart = document.querySelector('.start')
 const divIntro = document.querySelector('.intro')
 
@@ -9,7 +10,6 @@ const stopBtn = document.querySelector('form .startstopBtn')
 const finishDiv = document.querySelector('.finished')
 const highscoreContainer = document.querySelector('.hs-container')
 const timeSpan = finishDiv.querySelector('.time')
-
 
 const eingabe = 'Block 4: (Duplikat erforderlich) "Responsive Design ist entscheidend in der Webentwicklung, um sicherzustellen, dass Webseiten auf verschiedenen Geräten korrekt angezeigt werden. Dies beinhaltet die Anpassung an unterschiedliche Bildschirmgrößen durch flexible Layouts und Bilder."\n\nBlock 2: "Die Grundlagen der Computerbedienung umfassen die Beherrschung von Tastaturkürzeln wie STRG+C und STRG+V für Kopieren und Einfügen. Diese Fähigkeiten können die Produktivität erheblich steigern und die Effizienz bei der Arbeit am Computer verbessern."\n\nBlock 5: (Duplikat erforderlich) "Effektives Online-Marketing erfordert eine starke Präsenz in sozialen Medien. Durch gezielte Kampagnen und das Teilen relevanter Inhalte können Unternehmen ihre Reichweite vergrößern und eine engagierte Community aufbauen."\n\nBlock 1: "Webentwicklung beinhaltet nicht nur das Design und die Programmierung von Websites, sondern auch die Optimierung für Suchmaschinen. SEO-Techniken sind unerlässlich, um die Sichtbarkeit einer Webseite in den Suchergebnissen zu verbessern und mehr Traffic zu generieren."\n\nBlock 3: "Online-Marketing Strategien müssen datengesteuert sein, um den Erfolg zu maximieren. Die Analyse von Website-Traffic und Nutzerinteraktionen hilft, die Effektivität von Werbekampagnen zu bewerten und zielgerichtete Maßnahmen zu ergreifen."'
 
@@ -24,8 +24,7 @@ let solved = 0
 let startTime
 
 
-
-function submitForm(e){
+function submitForm(e) {
     e.preventDefault()
 }
 
@@ -41,44 +40,70 @@ function setFocusAtStart(event) {
     textarea.selectionEnd = 0;
 }
 
-function start(){
-// Startet das erste Spiel, Intro ausgeblendet, Formular eingeblendet, der Timer gesetzt
+function start() {
+    // Startet das erste Spiel, Intro ausgeblendet, Formular eingeblendet, der Timer gesetzt
     divStart.classList.add("hide")
     divIntro.classList.add("hide")
     form.classList.remove('hide')
     startTime = Date.now()
-    textarea.value=eingabe
+    textarea.value = eingabe
+    hintModeOn()
 }
 
 
-function stop(){
-// Beendet Spiel, Timer gestoppt, Formular ausgeblendet, Zeit angezeigt
-   if (!ueberpruefeReihenfolge(textarea.value)) {
-    showWrongBox()
-   }else {
-    form.classList.add('hide')
-    finishDiv.classList.remove('hide')
-    stopTime=Math.trunc((Date.now()-startTime)/1000)
-    timeSpan.textContent=`${stopTime} s` 
-    let highH3 = finishDiv.querySelector('h3')
-    if (compareHighscore(stopTime)){
-       highH3.classList.remove('hide') 
+function stop() {
+    // Beendet Spiel, Timer gestoppt, Formular ausgeblendet, Zeit angezeigt
+    if (!ueberpruefeReihenfolge(textarea.value)) {
+        showWrongBox()
+        // bringt focus zurück zum Textfeld
+        let textarea = document.querySelector("textarea")
+        textarea.focus()
     } else {
-        highH3.classList.add('hide') 
+        hintModeOff()
+        form.classList.add('hide')
+        finishDiv.classList.remove('hide')
+        stopTime = Math.trunc((Date.now() - startTime) / 1000)
+        timeSpan.textContent = `${stopTime} s`
+        let highH3 = finishDiv.querySelector('h3')
+        if (compareHighscore(stopTime)) {
+            highH3.classList.remove('hide')
+        } else {
+            highH3.classList.add('hide')
+        }
     }
-   }
-    
+
 }
 
-function startAgain(){
-// Neues Spiel, Formular zurückgesetzt und eingeblendet, Timer erneut gestartet
-   
+function startAgain() {
+    // Neues Spiel, Formular zurückgesetzt und eingeblendet, Timer erneut gestartet
+
     finishDiv.classList.add('hide')
     divStart.classList.remove('hide')
     divIntro.classList.remove('hide')
 
-    startTime=Date.now()
+    startTime = Date.now()
     displayHighscore()
+    hintModeOff()
+}
+
+/* 
+    Hinweis Animation.
+    Setzt bei nicht-Fokus der TextArea eine animation über die ganze Seite, 
+    um es für den Nutzer so eindeutig wie möglich zu gestallten, 
+    dass dieser auf das Label klicken soll.
+ */
+function hintModeOn() {
+    label = document.querySelector("label")
+    if (label) {
+        body.id = "hint-mode"
+    }
+}
+
+/* 
+    Beendet die Hinweis Animation.
+*/
+function hintModeOff() {
+    body.id = ""
 }
 
 function ueberpruefeReihenfolge(eingabe) {
@@ -91,7 +116,7 @@ function ueberpruefeReihenfolge(eingabe) {
     }
     // console.log('Bloecke aus Eingabe: ', bloecke)
     // Sortiere die Blöcke nach ihrer Nummer und behandle Duplikate
-     const sortierteUndDuplizierteBloecke = bloecke
+    const sortierteUndDuplizierteBloecke = bloecke
         //  .sort((a, b) => a.nummer - b.nummer)
         .reduce((akk, block) => {
             akk.push(block.nummer);
@@ -102,8 +127,9 @@ function ueberpruefeReihenfolge(eingabe) {
         }, []);
 
     // Erwartete Reihenfolge 
-  //  const erwarteteReihenfolge = [1, 2, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 16, 17, 17, 18, 19, 19, 20]; // Beispielreihenfolge
-    const erwarteteReihenfolge = [1, 2, 3, 4, 4, 5, 5 ]; // Beispielreihenfolge
+    //  const erwarteteReihenfolge = [1, 2, 2, 3, 4, 5, 6, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 16, 17, 17, 18, 19, 19, 20]; // Beispielreihenfolge
+
+    const erwarteteReihenfolge = [1, 2, 3, 4, 4, 5, 5]; // Beispielreihenfolge
 
     console.log(sortierteUndDuplizierteBloecke)
     // Überprüfung, ob die Reihenfolge und Duplikate korrekt sind
@@ -112,27 +138,27 @@ function ueberpruefeReihenfolge(eingabe) {
     return istKorrekt;
 }
 
-function showWrongBox(){
+function showWrongBox() {
     wrongBox.classList.remove('hide')
     setTimeout(() => wrongBox.classList.add('hide'), 3000)
 }
 
 // Highscore functions
-function getHighscore(){
-   return localStorage.getItem('highscore-cut-copy')
+function getHighscore() {
+    return localStorage.getItem('highscore-cut-copy')
 }
 
-function setHighscore(newScore){
+function setHighscore(newScore) {
     localStorage.setItem('highscore-cut-copy', newScore)
 }
 
-function compareHighscore(newScore){
+function compareHighscore(newScore) {
     let highscore = getHighscore()
     if (!highscore) {
         setHighscore(newScore)
         return true
     } else {
-        if (highscore<newScore){
+        if (highscore < newScore) {
             return false
         } else {
             setHighscore(newScore)
@@ -141,11 +167,11 @@ function compareHighscore(newScore){
     }
 }
 
-function displayHighscore(){
+function displayHighscore() {
     let highscore = getHighscore()
-    if (highscore){
+    if (highscore) {
         highscoreContainer.classList.remove('hide')
-        highscoreContainer.querySelector('#score').textContent=highscore
+        highscoreContainer.querySelector('#score').textContent = highscore
     }
 }
 
