@@ -61,7 +61,7 @@
                <span class="tip">| STRG+C - Kopieren | STRG+V - Einfügen | STRG+X - Ausschneiden | SHIFT+Pfeiltasten - Markieren |</span>
                <label for="text">Hier klicken um Cursor in Textfeld zu setzen. Naviagtion nur mit Pfeiltasten.</label>
                
-               <textarea name="text" id="text">
+               <textarea name="text" id="text" onfocus="hintModeOff(event)" onblur="hintModeOn(event)">
                 </textarea>
 
             </section>
