@@ -28,10 +28,8 @@ const isLanguageEnglish = html.lang === "en"
 //tausche (Duplikate erforderlich) mit (Duplicate required) aus, falls Seite auf Englisch
 
 if (isLanguageEnglish) {
-    eingabe = eingabe.replace("(Duplikat erforderlich)", "(Duplicate required)")
+    eingabe = eingabe.replaceAll("(Duplikat erforderlich)", "(Duplicate required)")
     console.log("??");
-
-
 }
 
 
@@ -119,7 +117,9 @@ function hintModeOff() {
 
 function ueberpruefeReihenfolge(eingabe) {
     // Zerlegt den Eingabestring in Blöcke
-    const blockRegex = /Block (\d+): (\(Duplikat erforderlich\) )?".+?"?\n*/g;
+    const blockRegex = isLanguageEnglish
+    ? /Block (\d+): (\(Duplicate required\) )?".+?"?\n*/g
+    : /Block (\d+): (\(Duplikat erforderlich\) )?".+?"?\n*/g;
     let match;
     const bloecke = [];
     while ((match = blockRegex.exec(eingabe)) !== null) {
@@ -142,18 +142,18 @@ function ueberpruefeReihenfolge(eingabe) {
 
     const erwarteteReihenfolge = [1, 2, 3, 4, 4, 5, 5]; // Beispielreihenfolge
 
-    
+
     console.log(sortierteUndDuplizierteBloecke)
     // Überprüfung, ob die Reihenfolge und Duplikate korrekt sind
     const istKorrekt = JSON.stringify(sortierteUndDuplizierteBloecke) === JSON.stringify(erwarteteReihenfolge);
-    
+
     // Ändert die Fehlermeldung, sollten Blöcke nicht dupliziert worden sein in der jeweiligen Sprache
-    if(erwarteteReihenfolge.length != sortierteUndDuplizierteBloecke.length){
+    if (erwarteteReihenfolge.length != sortierteUndDuplizierteBloecke.length) {
         let changedMessageDe = '\n Überprüfe, ob Blöcke mit "(Duplikat erforderlich)" auch wirklich zwei Mal vorkommen.'
         let changedMessageEn = '\n Check, whether text blocks containing "(Duplicate required)" appear twice.'
 
         wrongBox.textContent = isLanguageEnglish ? changedMessageEn : changedMessageDe
-    }else{
+    } else {
         let originalWrongMessageDe = "Leider noch nicht korrekt, probier es erneut"
         let originalWrongMessageEn = "Unfortunately not correct, try again"
 
